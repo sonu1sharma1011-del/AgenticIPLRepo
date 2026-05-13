@@ -1,0 +1,169 @@
+:root {
+  --ipl-blue: #19398a;
+  --ipl-gold: #efb21e;
+  --ipl-dark-blue: #060b1a;
+  --glass-bg: rgba(6, 11, 26, 0.7);
+  --glass-border: rgba(239, 178, 30, 0.3);
+  --text-primary: #ffffff;
+  --text-secondary: #8aacc8;
+  --accent-gold: #ffd700;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background-color: var(--ipl-dark-blue);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.stadium-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.3) saturate(1.2);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+}
+
+/* --- RE-STORED DASHBOARD LAYOUT --- */
+.app-container { display: flex; flex-direction: column; height: 100vh; }
+
+.main-header {
+  height: 80px;
+  display: grid;
+  grid-template-columns: 300px 1fr 300px;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 100;
+}
+
+.dashboard-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  padding: 0 20px 20px 20px;
+  gap: 20px;
+}
+
+.top-center-score {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  padding: 8px 24px;
+  gap: 20px;
+  border-bottom: 2px solid var(--ipl-gold);
+  cursor: pointer;
+}
+
+.ipl-logo-mini { background: var(--ipl-gold); color: var(--ipl-blue); font-weight: 900; padding: 4px 8px; border-radius: 4px; font-style: italic; }
+.score-ticker { display: flex; align-items: center; gap: 15px; }
+.live-dot { width: 8px; height: 8px; background: #ff0000; border-radius: 50%; animation: blink 1s infinite; }
+.match-pair { font-weight: 800; color: var(--accent-gold); }
+.current-score { font-size: 1.4rem; font-weight: 900; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.top-right-actions { justify-self: end; }
+.game-zone-btn { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+
+/* --- Sidebar (Left) --- */
+.left-match-center { width: 300px; display: flex; flex-direction: column; padding: 20px; }
+.sidebar-header { display: flex; align-items: center; gap: 12px; margin-bottom: 30px; color: var(--ipl-gold); }
+.sidebar-menu { display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px; }
+.menu-item { display: flex; align-items: center; gap: 15px; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+.menu-item:hover { background: rgba(239, 178, 30, 0.1); color: var(--ipl-gold); }
+.sidebar-feed h4 { font-size: 0.75rem; letter-spacing: 2px; margin-bottom: 15px; color: var(--text-secondary); }
+.mini-feed { display: flex; flex-direction: column; gap: 15px; overflow-y: auto; }
+
+/* --- Bottom Center AI --- */
+.bottom-center-ai { position: fixed; bottom: 20px; left: 320px; right: 20px; display: flex; justify-content: center; z-index: 200; }
+.ai-interaction-hub { width: 100%; max-width: 800px; padding: 20px; border-bottom: 4px solid var(--ipl-gold); }
+.active-interaction { margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; }
+.interaction-badge { background: var(--ipl-gold); color: var(--ipl-blue); display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 900; margin-bottom: 10px; }
+.ai-input-bar { display: flex; gap: 15px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; }
+.ai-input-bar input { flex: 1; background: transparent; border: none; color: white; font-size: 1rem; }
+.ai-send-btn { background: var(--ipl-gold); color: var(--ipl-blue); border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
+
+/* --- Points Table --- */
+.ipl-table table { width: 100%; border-collapse: collapse; }
+.ipl-table th { padding: 15px; text-align: left; color: var(--ipl-gold); text-transform: uppercase; font-size: 0.8rem; border-bottom: 1px solid var(--glass-border); }
+.ipl-table td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.t-dot { width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 900; margin-right: 15px; color: white; }
+.form-badges { display: flex; gap: 6px; }
+.form-dot { width: 24px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 900; color: white; }
+.form-dot.w { background: #00c853; }
+.form-dot.l { background: #d50000; }
+
+/* --- Modals --- */
+.modal-wrapper { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.modal-content { width: 90%; max-width: 800px; background: var(--ipl-dark-blue); border: 2px solid var(--ipl-gold); padding: 30px; border-radius: 12px; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.modal-close { cursor: pointer; color: var(--text-secondary); }
+
+/* --- One-Over Game UI (Isolated) --- */
+.ipl-game-pro { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+.game-header { width: 100%; display: flex; justify-content: space-around; background: rgba(0, 0, 0, 0.4); padding: 10px; border-radius: 8px; border: 1px solid var(--glass-border); }
+.g-stat { font-size: 0.9rem; color: var(--text-secondary); }
+.g-stat strong { color: var(--ipl-gold); font-size: 1.1rem; margin-left: 5px; }
+.game-arena-pro { width: 100%; height: 380px; background: radial-gradient(circle at 50% 50%, #1e3c72, #000); border-radius: 12px; position: relative; overflow: hidden; border: 2px solid var(--ipl-gold); }
+.bowler-pos { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); font-size: 2.5rem; }
+.pro-ball { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); width: 22px; height: 22px; background: #ff0000; border-radius: 50%; box-shadow: 0 0 20px #ff0000; z-index: 40; }
+.stumps-pro { position: absolute; bottom: 40px; left: 80px; display: flex; gap: 5px; }
+.s-stick { width: 5px; height: 60px; background: #8d6e63; border-radius: 2px; }
+.batsman-pro { position: absolute; bottom: 40px; left: 110px; z-index: 50; }
+.pro-player { font-size: 5rem; }
+.pro-bat { font-size: 4rem; position: absolute; top: -10px; right: -40px; transform-origin: bottom left; }
+.game-pitch-pro { position: absolute; bottom: 0; width: 100%; height: 60px; background: #2e7d32; border-top: 4px solid #43a047; }
+.game-announcer { position: absolute; top: 120px; width: 100%; text-align: center; font-size: 2rem; font-weight: 900; color: white; text-shadow: 0 2px 10px #000; }
+.btn-strike { background: var(--ipl-gold); color: var(--ipl-blue); width: 100%; padding: 15px; font-size: 1.5rem; font-weight: 900; border-radius: 10px; border: none; cursor: pointer; }
+.game-result-screen { text-align: center; padding: 20px; }
+.final-score { font-size: 4rem; font-weight: 900; color: var(--ipl-gold); margin: 10px 0; }
+.over-balls { display: flex; justify-content: center; gap: 10px; margin: 30px 0; }
+.ball-res { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; background: #333; }
+.ball-res.r-6 { background: #ffeb3b; color: #000; }
+.ball-res.r-4 { background: #4caf50; }
+.ball-res.r-0 { background: #f44336; }
+.btn-ipl-large { background: var(--ipl-gold); color: var(--ipl-blue); padding: 15px 40px; font-size: 1.2rem; font-weight: 800; border-radius: 50px; border: none; cursor: pointer; }
+
+/* --- AI Loading State --- */
+.ai-loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 20px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--ipl-gold);
+  border-radius: 50%;
+  animation: pulse-ring 1.5s infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 10px var(--ipl-gold); }
+  100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+.icon-spin { animation: spin 1s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* --- Responsive --- */
+@media (max-width: 1000px) { .left-match-center { display: none; } .bottom-center-ai { left: 20px; } .main-header { grid-template-columns: 1fr 1fr; } }
