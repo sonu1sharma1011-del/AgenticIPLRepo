@@ -23,24 +23,19 @@ class CricketBrain:
             """Opens the detailed match scorecard modal."""
             return {"action": "OPEN_SCORECARD"}
 
-        def start_game():
-            """Launches the mini cricket game for the user to play."""
-            return {"action": "START_GAME"}
-
         def trigger_emoji_storm():
             """Triggers a celebratory emoji rain on the user's screen."""
             return {"action": "EMOJI_STORM"}
 
-        self.tools = [open_points_table, open_scorecard, start_game, trigger_emoji_storm]
+        self.tools = [open_points_table, open_scorecard, trigger_emoji_storm]
 
         self.model = genai.GenerativeModel(
             model_name="gemini-1.5-flash",
             tools=self.tools,
             generation_config={
                 "temperature": 0.7,
-                "response_mime_type": "application/json",
             },
-            system_instruction=SYSTEM_PROMPT + "\n\nCRITICAL: If the user wants to see stats, play a game, or see the table, CALL THE CORRESPONDING TOOL. You must still provide a JSON response as specified."
+            system_instruction=SYSTEM_PROMPT + "\n\nCRITICAL: If the user wants to see stats or see the table, CALL THE CORRESPONDING TOOL. You must still provide a JSON response as specified."
         )
         self.chat_session = self.model.start_chat(enable_automatic_function_calling=True)
 
@@ -50,7 +45,11 @@ class CricketBrain:
             if not api_key or api_key == "your_api_key_here":
                 return self.get_fallback_response("API Key missing.")
 
-            response = self.chat_session.send_message(match_event)
+            import asyncio
+            loop = asyncio.get_event_loop()
+            response = await loop.run_in_executor(
+                None, self.chat_session.send_message, match_event
+            )
             
             # Extract tool calls from the parts
             tool_calls = []
@@ -71,8 +70,6 @@ class CricketBrain:
             # Map tool calls to UI actions
             if "open_points_table" in tool_calls:
                 agent_output["action"]["tool_to_call"] = "TABLE_OPEN"
-            elif "start_game" in tool_calls:
-                agent_output["action"]["tool_to_call"] = "GAME_START"
             elif "open_scorecard" in tool_calls:
                 agent_output["action"]["tool_to_call"] = "SCORECARD_OPEN"
             
